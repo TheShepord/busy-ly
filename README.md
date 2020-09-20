@@ -4,7 +4,7 @@ Imagine a study group where you can connect with your friends remotely, meet new
 
 [Busy-ly backend](https://github.com/Pudigor/Busy-ly_backend-prototype)
 
-![Busy-ly in action](https://github.com/TheShepord/chip8-emulator/blob/master/assets/images/screenshot.png)
+![Busy-ly in action](https://github.com/TheShepord/busy-ly/blob/master/assets/images/screenshot.png)
 
 ## Installation
 

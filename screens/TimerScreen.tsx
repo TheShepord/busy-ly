@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Animated, Vibration} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button } from 'react-native-elements';
+import { Button, Divider } from 'react-native-elements';
 import {LinearGradient, BVLinearGradient} from 'react-native-linear-gradient';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 
@@ -135,6 +135,7 @@ export default function TimerScreen() {
           duration={ getDuration() }
           size={360}
           strokeWidth={24}
+          trailColor={'#F0FFFF'}
           // isLinearGradient={true}
           // gradientUniqueKey={}
           // } statesEnum.BREAK) ? { isCompleted[2]breakDuration }
@@ -143,23 +144,22 @@ export default function TimerScreen() {
           onComplete={timesUp}
         >
         {({ remainingTime, animatedColor }) => (
-          <View style={{flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center'}}>
-            <Text></Text>
+          <View style={{flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: '#FFFFFF', width:280, height: 280, borderRadius:140, borderColor: '#FFFFFF', borderWidth:60}}>
             <Animated.Text style={{color: animatedColor, fontSize: 64, marginTop: 0}}>
               {minuteSecondsFormat(remainingTime)}
             </Animated.Text>
             {(() => {
                 if (clockState === statesEnum.BREAK) {
-                  return <Text style={{fontSize: 32, textAlign: 'center', marginTop: 0}}>Time to connect!</Text>
+                  return <Text style={{fontSize: 26, textAlign: 'center', marginTop: 0}}>Connect!</Text>
                 }
                 else if (isStopped) {
-                  return <Text style={{fontSize: 32, textAlign: 'center', marginTop: 0}}>Ready?</Text>
+                  return <Text style={{fontSize: 26, textAlign: 'center', marginTop: 0}}>Ready?</Text>
                 }
                 else if (clockState === statesEnum.WORK) {
-                  return <Text style={{fontSize: 32, textAlign: 'center', marginTop: 0}}>GRIND TIME</Text>
+                  return <Text style={{fontSize: 26, textAlign: 'center', marginTop: 0}}>GRIND TIME</Text>
                 }
                 else {
-                  return <Text style={{fontSize: 32, textAlign: 'center', marginTop: 0}}>Time to connect!</Text>
+                  return <Text style={{fontSize: 26, textAlign: 'center', marginTop: 0}}>Connect!</Text>
                 }
             })()}
           </View>
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#fff',
+      backgroundColor: '#F5F5F5',
       alignItems: 'center',
       justifyContent: 'flex-end',
     },
@@ -241,13 +241,17 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      margin: 15
+      margin: 15,
+      borderWidth:10,
+      borderColor:'#FFFFFF',
+      borderRadius:40
   },
   rowItems: {
   //   flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    backgroundColor:'#F5F5F5'
   },
   buttonView: {
     flex: 1,

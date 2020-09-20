@@ -1,16 +1,54 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { StyleSheet, Image } from 'react-native';
+import { Button, Overlay, ListItem } from 'react-native-elements';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ConnectionsScreen from '../screens/ConnectionsScreen';
 import TimerScreen from '../screens/TimerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import { Text, View } from '../components/Themed';
 import { BottomTabParamList, ConnectionsTabParamList, TimerTabParamList, ProfileTabParamList} from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+
+function ConnectionsHeader() {
+
+  return (
+    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+      <Button
+        // onPress={ConnectionsScreen.toggleFriendOverlay}
+        icon={{name: "navigate-before"}}
+        buttonStyle={{ backgroundColor: '#F0FFFF', borderRadius:30}}
+      />
+      <Text style = {{fontSize: 26}}>Person Name</Text>
+      <Button
+        icon={{name: "person-add" }}
+        buttonStyle={{ backgroundColor: '#F0FFFF', borderRadius:30}}
+      />
+    </View>
+  );
+}
+
+function TimerHeader() {
+  return (
+    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+      {/* <Text
+        // icon={{name: "more-vert"}}
+        // buttonStyle={{ backgroundColor: '#FFFFFF', borderWidth: 10, borderRadius:30,}}
+      /> */}
+      <Image source="..assets/images/Busy-ly_icon.png"/>
+      <Text style={{fontSize: 26}}>Pomodoro Timer</Text>
+      <Button
+        icon={{name: "more-vert" }}
+        buttonStyle={{ backgroundColor: '#F0FFFF', borderRadius:30}}
+      />
+    </View>
+  );
+}
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -24,7 +62,7 @@ export default function BottomTabNavigator() {
         name="Connections"
         component={ConnectionsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="chat" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="chat" color={color} />
         }}
       />
       <BottomTab.Screen
@@ -55,13 +93,15 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const ConnectionsTabStack = createStackNavigator<ConnectionsTabParamList>();
 
+
+
 function ConnectionsNavigator() {
   return (
     <ConnectionsTabStack.Navigator headerMode='screen'>
       <ConnectionsTabStack.Screen
         name="Your Connections"
         component={ConnectionsScreen}
-        // options={{ headerTitle: 'Tab One Title' }}
+        options={{headerTitle: props => <ConnectionsHeader {...props} />}}
       />
     </ConnectionsTabStack.Navigator>
   );
@@ -75,12 +115,11 @@ function TimerNavigator() {
       <TimerTabStack.Screen
         name="Pomodoro Timer"
         component={TimerScreen}
-        // options={{ headerTitle: 'Tab Two Title' }}
+        options={{headerTitle: props => <TimerHeader {...props} />}}
       />
     </TimerTabStack.Navigator>
   );
 }
-
 
 const ProfileTabStack = createStackNavigator<ProfileTabParamList>();
 
@@ -95,3 +134,4 @@ function ProfileNavigator() {
     </ProfileTabStack.Navigator>
   );
 }
+

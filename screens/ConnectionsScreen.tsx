@@ -2,26 +2,11 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
 import { Button, Overlay, ListItem, Avatar } from 'react-native-elements';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-
-const friends = [
-  {
-    name: 'Amy Farha',
-    id: 2,
-    subtitle: 'Vice President',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-  },
-  {
-    name: 'Chris Jackson',
-    id: 3,
-    subtitle: 'Vice Chairman',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-  },
-
-]
-// const Stack = createStackNavigator();
+import { ProfileTabParamList} from '../types';
 
 // /send_message
 // message = {
@@ -31,7 +16,7 @@ const friends = [
 // }
 
 
-export default function ConnectionsScreen() {
+export default function ConnectionsScreen({ navigation }) {
   // React.useEffect(() => {
   //   fetch('/messages/1/2').then(response =>
   //     response.json().then(data => {
@@ -39,33 +24,43 @@ export default function ConnectionsScreen() {
   //     }))
   // }, []);
   // return (
-  // <View>
-  //   {
-  //     friends.map((l, i) => (
-  //       <ListItem key={i} bottomDivider>
-  //         <Avatar source={{uri: l.avatar_url}} />
-  //         {/* <Avatar source={{uri: l.avatar_url}} /> */}
-  //         <ListItem.Content>
-  //           <ListItem.Title>{l.name}</ListItem.Title>
-  //           <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-  //         </ListItem.Content>
-  //       </ListItem>
-  //     ))
-  //   }
-  // </View>)
+
+  let default_messages = [
+    {
+      _id: 1,
+      text: 'Hey! What have you been studying?',
+      createdAt: new Date(),
+      user: {
+        _id: 2,
+        name: 'Robert Null',
+        // avatar: 'https://placeimg.com/140/140/any',
+      }
+    },
+    {
+      _id: 1,
+      text: "This physics pset is killing me lmao how are you",
+      createdAt: new Date(),
+      user: {
+        _id: 3,
+        name: 'Jess Merigold',
+        // avatar: 'https://placeimg.com/140/140/any',
+      }
+    },
+    {
+      _id: 1,
+      text: "I saw you're studying CS. I'm a senior, do you need help with anything?",
+      createdAt: new Date(),
+      user: {
+        _id: 4,
+        name: 'Banana Split',
+        // avatar: 'https://placeimg.com/140/140/any',
+      }
+    }
+  ]
   const [messages, setMessages] = React.useState([]);
   React.useEffect(() => {
     setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          // avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
+      default_messages[(Math.random * default_messages.length) | 0]
     ])
   }, [])
 

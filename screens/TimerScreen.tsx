@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { StyleSheet, Animated, Vibration} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button, Divider } from 'react-native-elements';
+import { Button, Badge, withBadge } from 'react-native-elements';
 import {LinearGradient, BVLinearGradient} from 'react-native-linear-gradient';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import BottomTabNavigator from '../navigation/BottomTabNavigator';
 
 export default function TimerScreen() {
   const statesEnum = {

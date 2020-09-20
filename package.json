@@ -8,7 +8,7 @@
     "eject": "expo eject",
     "test": "jest --watchAll"
   },
-  "proxy":"http://localhost:5000",
+  "proxy": "http://localhost:5000",
   "jest": {
     "preset": "jest-expo"
   },
@@ -34,6 +34,7 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-gifted-chat": "^0.16.3",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-notification-badge": "^1.0.5",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-svg": "^12.1.0",

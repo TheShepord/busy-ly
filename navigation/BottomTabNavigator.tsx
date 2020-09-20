@@ -23,7 +23,6 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Connections"
         component={ConnectionsNavigator}
-        headerMode='none'
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="chat" color={color} />,
         }}
@@ -31,7 +30,6 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Timer"
         component={TimerNavigator}
-        headerMode='none'
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="av-timer" color={color} />,
         }}
@@ -39,7 +37,6 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
-        headerMode='none'
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="person-pin" color={color} />,
         }}
@@ -60,9 +57,9 @@ const ConnectionsTabStack = createStackNavigator<ConnectionsTabParamList>();
 
 function ConnectionsNavigator() {
   return (
-    <ConnectionsTabStack.Navigator headerMode='none'>
+    <ConnectionsTabStack.Navigator headerMode='screen'>
       <ConnectionsTabStack.Screen
-        name="ConnectionsScreen"
+        name="Your Connections"
         component={ConnectionsScreen}
         // options={{ headerTitle: 'Tab One Title' }}
       />
@@ -74,9 +71,9 @@ const TimerTabStack = createStackNavigator<TimerTabParamList>();
 
 function TimerNavigator() {
   return (
-    <TimerTabStack.Navigator headerMode='none'>
+    <TimerTabStack.Navigator headerMode='screen'>
       <TimerTabStack.Screen
-        name="TimerScreen"
+        name="Pomodoro Timer"
         component={TimerScreen}
         // options={{ headerTitle: 'Tab Two Title' }}
       />
@@ -89,9 +86,9 @@ const ProfileTabStack = createStackNavigator<ProfileTabParamList>();
 
 function ProfileNavigator() {
   return (
-    <ProfileTabStack.Navigator headerMode='none'>
+    <ProfileTabStack.Navigator headerMode='screen'>
       <ProfileTabStack.Screen
-        name="ProfileScreen"
+        name="Profile"
         component={ProfileScreen}
         // options={{ headerTitle: 'Tab Two Title' }}
       />

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Animated } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -7,19 +8,91 @@ import {Button} from 'react-native-elements'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 
 export default function TimerScreen() {
-  const startTime = 25
+  const statesEnum = {
+    WORK: 'work',
+    BREAK: 'break',
+    LONG_BREAK: 'longBreak'
+  }
+
+  const workDuration = 5;  // 25
+  const breakDuration = 1;  // 5
+  const longBreakDuration = 3;  // 15
   const [isRestart, setIsRestart] = React.useState(0);
   const [isActive, setIsActive] = React.useState(false);
+  const [isCompleted, setCompleted] = React.useState([false, false, false, false]);
+  const [clockState, setClockState] = React.useState(statesEnum.WORK);
 
   const togglePause = () => {
       setIsActive(!isActive);
   }
 
   const stop = () => {
-      setIsRestart(prevKey => prevKey + 1)
+      setIsRestart(prevKey => prevKey + 1);
       setIsActive(false);
   }
 
+  const resetCheckboxes = () => {
+    let newCompleted = [...isCompleted];  // duplicates array so that setCompleted renders instantly
+
+    for (let j = 0; j < 4; j++) {
+      newCompleted[j] = false;
+    }
+    setCompleted(newCompleted);
+    setClockState(statesEnum.WORK);
+    stop();
+  }
+  
+  const updateCheckboxes = () => {
+    let i = 0;
+    for (; isCompleted[i] && i < 4; i++) {
+      ;
+    }
+
+    let newCompleted = isCompleted;
+    if (i === 4) {  // all checkboxes ticked, reset
+      resetCheckboxes();
+    }
+    else {
+      if (i === 3) {  // long break this time!
+        setClockState(statesEnum.LONG_BREAK);
+      }
+      newCompleted = [...isCompleted];  // duplicates array so that setCompleted renders instantly
+      newCompleted[i] = true;
+      setCompleted(newCompleted);
+    }
+  }
+  
+  const timesUp = () => {
+    switch (clockState) {
+      case statesEnum.WORK:
+        setClockState(statesEnum.BREAK);
+        updateCheckboxes();
+        break;
+      case statesEnum.BREAK:
+        setClockState(statesEnum.WORK);
+        break;
+      case statesEnum.LONG_BREAK:
+        setClockState(statesEnum.WORK);
+        updateCheckboxes();
+        break;
+    }
+
+    stop();
+
+  }
+
+  const getDuration = () => {
+    switch(clockState) {
+      case statesEnum.WORK:
+        return workDuration;
+      case statesEnum.BREAK:
+        return breakDuration;
+      case statesEnum.LONG_BREAK:
+        return longBreakDuration;
+      default:
+        return workDuration;
+    }
+  }
   // const createPauseStop = () => (
     
   // )
@@ -29,7 +102,7 @@ export default function TimerScreen() {
   //         interval = setInterval(() => {
   //             setTime(time => time - 1) }, 1000);
   //     }
-  //     else if (! isActive && time !== startTime) {
+  //     else if (! isActive && time !== workTime) {
   //         clearInterval(interval);
   //     }
 
@@ -41,9 +114,11 @@ export default function TimerScreen() {
       <CountdownCircleTimer
           key={isRestart}
           isPlaying={isActive}
-          duration={startTime}
+          duration={ getDuration() }
+          // } statesEnum.BREAK) ? { isCompleted[2]breakDuration }
+          //   : workDuration}
           colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
-          onComplete={stop}
+          onComplete={timesUp}
         >
         {({ remainingTime, animatedColor }) => (
           <Animated.Text style={{color: animatedColor}}>
@@ -51,19 +126,29 @@ export default function TimerScreen() {
           </Animated.Text>
         )}
      </CountdownCircleTimer>
-      <View style={styles.buttonContainer}>
+     <View style={styles.rowItems}>
+      {(isCompleted[0]) ? <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-checked" color={'black'}/>
+                          : <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-unchecked" color={'black'}/>}
+      {(isCompleted[1]) ? <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-checked" color={'black'}/>
+                          : <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-unchecked" color={'black'}/>}
+      {(isCompleted[2]) ? <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-checked" color={'black'}/>
+                          : <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-unchecked" color={'black'}/>}
+      {(isCompleted[3]) ? <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-checked" color={'black'}/>
+                          : <MaterialIcons size={30} style={{ marginBottom: -3 }} name="radio-button-unchecked" color={'black'}/>}
+     </View>
+      <View style={styles.rowItems}>
           <View style={styles.buttonView}>
               <Button
                   onPress={togglePause}
                   title={isActive ? 'Pause' : 'Start'}
               ></Button>
           </View>
-          {/* <View style={styles.buttonView}>
+          <View style={styles.buttonView}>
               <Button color="red"
-                  onPress={stop}
-                  title="Stop"
+                  onPress={isActive ? stop : resetCheckboxes}
+                  title={isActive ? "Stop" : "Restart"}
               ></Button>
-          </View> */}
+          </View>
       </View>
   </View>
   );
@@ -93,14 +178,14 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-evenly',
     },
 
-  buttonContainer: {
+  rowItems: {
   //   flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   buttonView: {
     flex: 1,

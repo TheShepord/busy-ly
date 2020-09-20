@@ -25,8 +25,7 @@ export default function ConnectionsScreen({ navigation }) {
   // }, []);
   // return (
 
-  let default_messages = [
-    {
+  let message1 = {
       _id: 1,
       text: 'Hey! What have you been studying?',
       createdAt: new Date(),
@@ -35,8 +34,8 @@ export default function ConnectionsScreen({ navigation }) {
         name: 'Robert Null',
         // avatar: 'https://placeimg.com/140/140/any',
       }
-    },
-    {
+    }
+    let message2 = {
       _id: 1,
       text: "This physics pset is killing me lmao how are you",
       createdAt: new Date(),
@@ -45,8 +44,8 @@ export default function ConnectionsScreen({ navigation }) {
         name: 'Jess Merigold',
         // avatar: 'https://placeimg.com/140/140/any',
       }
-    },
-    {
+    }
+    let message3 = {
       _id: 1,
       text: "I saw you're studying CS. I'm a senior, do you need help with anything?",
       createdAt: new Date(),
@@ -56,11 +55,11 @@ export default function ConnectionsScreen({ navigation }) {
         // avatar: 'https://placeimg.com/140/140/any',
       }
     }
-  ]
+  
   const [messages, setMessages] = React.useState([]);
   React.useEffect(() => {
     setMessages([
-      default_messages[(Math.random * default_messages.length) | 0]
+      message2
     ])
   }, [])
 

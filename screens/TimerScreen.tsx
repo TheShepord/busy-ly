@@ -73,6 +73,7 @@ export default function TimerScreen() {
       case statesEnum.WORK:
         setClockState(statesEnum.BREAK);
         updateCheckboxes();
+        // BottomTabNavigator.updateBadge();
         break;
       case statesEnum.BREAK:
         setClockState(statesEnum.WORK);

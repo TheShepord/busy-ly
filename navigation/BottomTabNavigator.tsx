@@ -69,11 +69,11 @@ function ConnectionsHeader( {navigation} ) {
   return (
     <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
       <Button
-        onPress={() => navigation.navigate('FriendsList')}
+        // onPress={() => navigation.navigate('FriendsList')}
         icon={{name: "navigate-before"}}
         buttonStyle={{ backgroundColor: '#F0FFFF', borderRadius:30}}
       />
-      <Text style = {{fontSize: 26}}>Robert Null</Text>
+      <Text style = {{fontSize: 26}}>Remaining Time: 0</Text>
       <Button
         icon={{name: "person-add" }}
         buttonStyle={{ backgroundColor: '#F0FFFF', borderRadius:30}}
@@ -105,7 +105,7 @@ export default function BottomTabNavigator() {
   
   const [badgeCount, setBadged] = React.useState(0);
 
-  const updateBadge = () => {
+  function updateBadge() {
     setBadged(badgeCount+1);
   }
 
